@@ -8,6 +8,7 @@ import { Colors } from '../theme/colors';
 import { screens } from '../constants/screens';
 import SignUpScreen from "../scenes/authentication/screens/SignUpScren";
 import LoginScreen from "../scenes/authentication/screens/LoginScreen";
+import { isAuthenticated } from '../scenes/authentication/selectors';
 
 const authenticationNavigatorScreenOptions = {
   headerShown: false
@@ -24,6 +25,8 @@ const MainNavigator = ({ isAuthenticated }) => {
       background: Colors.White
     },
   };
+
+  console.log('LOGGER', isAuthenticated);
 
   return (
     <NavigationContainer
@@ -51,6 +54,8 @@ const MainNavigator = ({ isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  isAuthenticated: isAuthenticated(state)
+});
 
 export default connect(mapStateToProps)(MainNavigator);
