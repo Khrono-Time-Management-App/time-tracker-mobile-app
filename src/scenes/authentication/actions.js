@@ -10,6 +10,8 @@ export const login = (email, password) => async dispatch => {
     try {
       const userToken = await loginApiCall({ email, password });
 
+      console.log(userToken);
+
       dispatch({ type: LOGIN.SUCCESS, payload: userToken })
     } catch (error) {
       dispatch({ type: LOGIN.FAILURE, payload: error });

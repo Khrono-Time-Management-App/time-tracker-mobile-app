@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { login as LoginCall } from '../actions'
 
 import {
   Box,
@@ -17,10 +18,13 @@ import {
 import Input from '../../../components/Input';
 
 
-const LoginScreen = ({}) => {
+const LoginScreen = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const onSubmit = () => {
+    onLogin(email, password);
+  }
 
   return (
     <Center flex={1} px="3">
@@ -65,7 +69,7 @@ const LoginScreen = ({}) => {
             autoCorrection={false}
             whiteBackground
           />
-          <Button mt="2" colorScheme="indigo" size="lg">
+          <Button mt="2" colorScheme="indigo" size="lg" onPress={onSubmit}>
             Sign in
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -97,6 +101,8 @@ const LoginScreen = ({}) => {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onLogin: LoginCall
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
