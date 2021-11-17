@@ -26,8 +26,6 @@ const MainNavigator = ({ isAuthenticated }) => {
     },
   };
 
-  console.log('LOGGER', isAuthenticated);
-
   return (
     <NavigationContainer
       theme={MyTheme}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -9,15 +9,18 @@ import {
   Heading,
   VStack,
   FormControl,
-  Input,
   Link,
   Button,
   HStack,
   Center
 } from "native-base"
+import Input from '../../../components/Input';
 
 
 const LoginScreen = ({}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
 
   return (
     <Center flex={1} px="3">
@@ -45,25 +48,23 @@ const LoginScreen = ({}) => {
         </Heading>
 
         <VStack space={3} mt="5">
-          <FormControl>
-            <FormControl.Label>Email ID</FormControl.Label>
-            <Input />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
-            <Input type="password" />
-            <Link
-              _text={{
-                fontSize: "sm",
-                fontWeight: "500",
-                color: "indigo.500",
-              }}
-              alignSelf="flex-end"
-              mt="1"
-            >
-              Forget Password?
-            </Link>
-          </FormControl>
+          <Input
+            textValue={email}
+            placeholder='Email'
+            onChangeText={setEmail}
+            textCapitalization={'none'}
+            autoCorrection={false}
+            whiteBackground
+          />
+          <Input
+            textValue={password}
+            placeholder='Password'
+            onChangeText={setPassword}
+            secureText
+            textCapitalization={'none'}
+            autoCorrection={false}
+            whiteBackground
+          />
           <Button mt="2" colorScheme="indigo" size="lg">
             Sign in
           </Button>
