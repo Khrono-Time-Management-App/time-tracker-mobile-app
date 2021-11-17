@@ -7,7 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors } from '../theme/colors';
 import { screens } from '../constants/screens';
 import SignUpScreen from "../scenes/authentication/screens/SignUpScren";
-import LoginScreen from "../scenes/authentication/screens/LoginScreen";
+import LoginScreen from '../scenes/authentication/screens/LoginScreen';
+import DashboardScreen from '../scenes/dashboard/screens/Dashboard';
 import { isAuthenticated } from '../scenes/authentication/selectors';
 
 const authenticationNavigatorScreenOptions = {
@@ -32,7 +33,7 @@ const MainNavigator = ({ isAuthenticated }) => {
     >
       {isAuthenticated ? (
         <BottomTabNavigator.Navigator>
-
+          <BottomTabNavigator.Screen name={screens.Dashboard} component={DashboardScreen}/>
         </BottomTabNavigator.Navigator>
       ) : (
         <AuthenticationStackNavigator.Navigator

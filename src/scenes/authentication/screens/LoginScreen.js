@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { login as LoginCall } from '../actions'
+import { login as loginCall } from '../actions'
 
 import {
   Box,
@@ -16,9 +16,10 @@ import {
   Center
 } from "native-base"
 import Input from '../../../components/Input';
+import { screens } from '../../../constants/screens';
 
 
-const LoginScreen = ({ onLogin }) => {
+const LoginScreen = ({ onLogin, navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -89,6 +90,7 @@ const LoginScreen = ({ onLogin }) => {
                 fontSize: "md",
               }}
               href="#"
+              onPress={() => {navigation.navigate(screens.SignUp)}}
             >
               Sign Up
             </Link>
@@ -102,7 +104,7 @@ const LoginScreen = ({ onLogin }) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  onLogin: LoginCall
+  onLogin: loginCall
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

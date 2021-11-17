@@ -1,4 +1,5 @@
 export const screens = {
   Login: 'Login',
-  SignUp: 'SignUp'
+  SignUp: 'SignUp',
+  Dashboard: 'Dashboard'
 };

@@ -10,5 +10,16 @@ export const loginApiCall = async (credentials) => {
     data: credentials
   }).then(response => {
     return response;
-  })
-}
+  });
+};
+
+export const createAccountApiCall = async (credentials) => {
+  return axios({
+    method: 'post',
+    url: `${backendUrl}/createUser`,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    data: credentials
+  }).then(response => {
+    return response;
+  });
+};
