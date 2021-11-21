@@ -17,14 +17,23 @@ import {
 } from "native-base"
 import Input from '../../../components/Input';
 import { screens } from '../../../constants/screens';
+import { useForm } from '../../../hooks/useForm';
+import loginSchema from "../../../validators/login";
 
+const INITIAL_VALUES = {
+  email: '',
+  password: '',
+}
 
 const LoginScreen = ({ onLogin, navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, errors, handleFormChanges, validate] = useForm(INITIAL_VALUES, { email: '' });
 
   const onSubmit = () => {
-    onLogin(email, password);
+    const isValid = validate(loginSchema);
+
+    if(isValid){
+      onLogin(formData.email, formData.password);
+    }
   }
 
   return (
@@ -54,17 +63,18 @@ const LoginScreen = ({ onLogin, navigation }) => {
 
         <VStack space={3} mt="5">
           <Input
-            textValue={email}
+            textValue={formData.email}
             placeholder='Email'
-            onChangeText={setEmail}
+            onChangeText={(text) => handleFormChanges(text, 'email')}
             textCapitalization={'none'}
             autoCorrection={false}
             whiteBackground
+            errorMessage={errors.email}
           />
           <Input
-            textValue={password}
+            textValue={formData.password}
             placeholder='Password'
-            onChangeText={setPassword}
+            onChangeText={(text) => handleFormChanges(text, 'password')}
             secureText
             textCapitalization={'none'}
             autoCorrection={false}

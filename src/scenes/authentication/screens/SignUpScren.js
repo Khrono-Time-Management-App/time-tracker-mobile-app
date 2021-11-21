@@ -6,32 +6,37 @@ import { createAccount as createAccountCall } from '../actions'
 
 import {
   Box,
-  Text,
   Heading,
   VStack,
-  FormControl,
   Link,
   Button,
   HStack,
   Center
 } from "native-base"
+
 import Input from '../../../components/Input';
 import { screens } from '../../../constants/screens';
 import { useForm } from '../../../hooks/useForm';
+import signupSchema from "../../../validators/signup";
 
+const INITIAL_VALUES = {
+  email: '',
+  password: '',
+  firstName: '',
+  lastName: '',
+  birthDate: '',
+}
 
 const SignUpScreen = ({ onCreateAccount, navigation }) => {
-  const [form, handleFormChanges] = useForm({
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    birthDate: ''
-  });
+  const [form, errors, handleFormChanges, validate] = useForm(INITIAL_VALUES, INITIAL_VALUES);
 
-  const onSubmit = () => {
-    onCreateAccount(form);
-    navigation.navigate(screens.Login);
+  const onSubmit = async () => {
+    const isValid = await validate(signupSchema);
+
+    if(isValid) {
+      onCreateAccount(form);
+      navigation.navigate(screens.Login);
+    }
   };
 
   return (
@@ -66,6 +71,7 @@ const SignUpScreen = ({ onCreateAccount, navigation }) => {
             onChangeText={(text) => handleFormChanges(text, 'email')}
             textCapitalization={'none'}
             autoCorrection={false}
+            errorMessage={errors.email}
             whiteBackground
           />
           <Input
@@ -75,22 +81,25 @@ const SignUpScreen = ({ onCreateAccount, navigation }) => {
             secureText
             textCapitalization={'none'}
             autoCorrection={false}
+            errorMessage={errors.password}
             whiteBackground
           />
           <Input
             textValue={form.firstName}
             placeholder='First Name'
             onChangeText={(text) => handleFormChanges(text, 'firstName')}
-            textCapitalization
+            textCapitalization={'none'}
             autoCorrection={false}
+            errorMessage={errors.firstName}
             whiteBackground
           />
           <Input
             textValue={form.lastName}
             placeholder='Last Name'
             onChangeText={(text) => handleFormChanges(text, 'lastName')}
-            textCapitalization
+            textCapitalization={'none'}
             autoCorrection={false}
+            errorMessage={errors.lastName}
             whiteBackground
           />
           <Button mt="2" colorScheme="indigo" size="lg" onPress={onSubmit}>
