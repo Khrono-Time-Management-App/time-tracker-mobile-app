@@ -19,17 +19,18 @@ import Input from '../../../components/Input';
 import { screens } from '../../../constants/screens';
 import { useForm } from '../../../hooks/useForm';
 import loginSchema from "../../../validators/login";
+import {loginErrorMessage} from "../selectors";
 
 const INITIAL_VALUES = {
   email: '',
   password: '',
 }
 
-const LoginScreen = ({ onLogin, navigation }) => {
+const LoginScreen = ({ onLogin, navigation, loginErrorMessage }) => {
   const [formData, errors, handleFormChanges, validate] = useForm(INITIAL_VALUES, { email: '' });
 
-  const onSubmit = () => {
-    const isValid = validate(loginSchema);
+  const onSubmit = async () => {
+    const isValid = await validate(loginSchema);
 
     if(isValid){
       onLogin(formData.email, formData.password);
@@ -80,6 +81,11 @@ const LoginScreen = ({ onLogin, navigation }) => {
             autoCorrection={false}
             whiteBackground
           />
+          {
+            loginErrorMessage && (
+              <Text style={ { color: 'red' }}>{loginErrorMessage}</Text>
+            )
+          }
           <Button mt="2" colorScheme="indigo" size="lg" onPress={onSubmit}>
             Sign in
           </Button>
@@ -111,7 +117,9 @@ const LoginScreen = ({ onLogin, navigation }) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  loginErrorMessage: loginErrorMessage(state),
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   onLogin: loginCall

@@ -4,7 +4,8 @@ import { storeToken } from '../../utils/asyncStorageMethods';
 const INITIAL_STATE = {
   user: {},
   loading: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  loginErrorMessage: '',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -19,6 +20,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
       delete action.payload.exp;
 
       return { ...state, user: action.payload, isAuthenticated: true, loading: false };
+    case LOGIN.FAILURE:
+      return { ...state, loginErrorMessage: 'Email or password is incorrect' };
     case CREATE_ACCOUNT.REQUEST:
       return { ...state, loading: true };
     case CREATE_ACCOUNT.SUCCESS:
