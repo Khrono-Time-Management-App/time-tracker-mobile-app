@@ -82,9 +82,15 @@ const LoginScreen = ({ onLogin, navigation, loginErrorMessage }) => {
             whiteBackground
           />
           {
-            loginErrorMessage && (
-              <Text style={ { color: 'red' }}>{loginErrorMessage}</Text>
-            )
+            loginErrorMessage ? (
+              <Text
+                style={
+                  { color: 'red' }
+                }
+              >
+                {loginErrorMessage}
+              </Text>
+            ) : null
           }
           <Button mt="2" colorScheme="indigo" size="lg" onPress={onSubmit}>
             Sign in
