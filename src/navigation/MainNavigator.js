@@ -12,6 +12,7 @@ import LoginScreen from '../scenes/authentication/screens/LoginScreen';
 import DashboardScreen from '../scenes/dashboard/screens/Dashboard';
 import { isAuthenticated } from '../scenes/authentication/selectors';
 import BottomTabBarIconOptions from './BottomTabBarIconOptions';
+import ActivityListScreen from '../scenes/dashboard/screens/ActivityList';
 
 const authenticationNavigatorScreenOptions = {
   headerShown: false
@@ -47,6 +48,7 @@ const MainNavigator = ({ isAuthenticated }) => {
           })}
         >
           <BottomTabNavigator.Screen name={screens.Dashboard} component={DashboardScreen}/>
+          <BottomTabNavigator.Screen name={screens.Activities} component={ActivityListScreen}/>
         </BottomTabNavigator.Navigator>
       ) : (
         <AuthenticationStackNavigator.Navigator
