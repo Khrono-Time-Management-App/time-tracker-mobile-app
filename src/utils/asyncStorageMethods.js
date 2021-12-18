@@ -16,8 +16,6 @@ export const getTokenFromLocalStorage = async () => {
   try {
     const token = await AsyncStorage.getItem(LocalStorage.Token);
 
-    console.log('token', token)
-
     return token
   } catch (error) {
     handleErrors(error);

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Colors } from '../theme/colors';
 import { screens } from '../constants/screens';
@@ -13,12 +12,15 @@ import DashboardScreen from '../scenes/dashboard/screens/Dashboard';
 import { isAuthenticated } from '../scenes/authentication/selectors';
 import BottomTabBarIconOptions from './BottomTabBarIconOptions';
 import ActivityListScreen from '../scenes/dashboard/screens/ActivityList';
+import { getTokenFromLocalStorage } from '../utils/asyncStorageMethods';
+import { setUserFromToken } from '../scenes/authentication/actions';
+import { bindActionCreators } from 'redux';
 
 const authenticationNavigatorScreenOptions = {
   headerShown: false
 };
 
-const MainNavigator = ({ isAuthenticated }) => {
+const MainNavigator = ({ isAuthenticated, onSetUserToken  }) => {
   const BottomTabNavigator = createBottomTabNavigator();
   const AuthenticationStackNavigator = createStackNavigator();
 
@@ -29,6 +31,14 @@ const MainNavigator = ({ isAuthenticated }) => {
       background: Colors.White
     },
   };
+
+  useEffect(() => {
+    (async () => {
+      const token = await getTokenFromLocalStorage();
+
+      await onSetUserToken(token);
+    })();
+  }, []);
 
   return (
     <NavigationContainer
@@ -72,4 +82,8 @@ const mapStateToProps = (state) => ({
   isAuthenticated: isAuthenticated(state)
 });
 
-export default connect(mapStateToProps)(MainNavigator);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onSetUserToken: setUserFromToken
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainNavigator);

@@ -56,7 +56,8 @@ const ActivityListScreen = ({fetchActivities, activities}) => {
         mb: "4",
         minW: "72",
       }}
-    > <FlatList data={activities} renderItem={ActivityItem} overflow={'scroll'}/>
+    >
+      <FlatList data={activities} renderItem={ActivityItem} />
     </ScrollView>
   );
 };

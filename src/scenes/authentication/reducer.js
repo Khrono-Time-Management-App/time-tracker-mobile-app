@@ -8,7 +8,10 @@ const INITIAL_STATE = {
   loginErrorMessage: '',
 };
 
-const userReducer = (state = INITIAL_STATE, action) => {
+let initialState = INITIAL_STATE;
+
+
+const userReducer = (state = initialState, action) => {
   let user = {};
 
   switch (action.type) {
@@ -26,6 +29,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: true };
     case CREATE_ACCOUNT.SUCCESS:
       return { ...state, loading: false };
+    case 'SET_USER_FROM_LOCAL_STORAGE':
+      return { ...state, isAuthenticated: true, loading: false, user: action.payload }
     default:
       return state;
   }
