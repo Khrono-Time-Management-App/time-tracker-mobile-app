@@ -15,6 +15,7 @@ import ActivityListScreen from '../scenes/dashboard/screens/ActivityList';
 import { getTokenFromLocalStorage } from '../utils/asyncStorageMethods';
 import { setUserFromToken } from '../scenes/authentication/actions';
 import { bindActionCreators } from 'redux';
+import ActivityStackNavigator from './ActivityStackNavigator';
 
 const authenticationNavigatorScreenOptions = {
   headerShown: false
@@ -58,7 +59,7 @@ const MainNavigator = ({ isAuthenticated, onSetUserToken  }) => {
           })}
         >
           <BottomTabNavigator.Screen name={screens.Dashboard} component={DashboardScreen}/>
-          <BottomTabNavigator.Screen name={screens.Activities} component={ActivityListScreen}/>
+          <BottomTabNavigator.Screen name={screens.Activities} component={ActivityStackNavigator}/>
         </BottomTabNavigator.Navigator>
       ) : (
         <AuthenticationStackNavigator.Navigator

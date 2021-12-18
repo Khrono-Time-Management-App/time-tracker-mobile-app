@@ -6,44 +6,6 @@ import {FlatList, ScrollView, View} from 'native-base';
 import {activities} from '../selectors';
 import {getActivities} from '../actions';
 
-const mockData = [{
-  name: 'Biceps Triceps',
-  activityDescription: 'Lorem ipsum dolor sit amet',
-  category: 'fitness',
-  startDateTime: 'TODAY @6AM'
-},
-  {
-    name: 'Learn LFTC',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'education',
-    startDateTime: 'TODAY @9AM'
-  },
-  {
-    name: 'Go to the office',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'work',
-    startDateTime: 'TODAY @10AM'
-  },
-  {
-    name: 'Good-night Sleep',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'sleep',
-    startDateTime: 'FRI @9PM'
-  },
-  {
-    name: 'Good-night Sleep',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'sleep',
-    startDateTime: 'SAT @9PM'
-  },
-  {
-    name: 'Good-night Sleep',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'sleep',
-    startDateTime: 'SUN @9PM'
-  },
-]
-
 const ActivityListScreen = ({fetchActivities, activities}) => {
   useEffect(() => {
     fetchActivities()
