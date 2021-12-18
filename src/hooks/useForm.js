@@ -27,5 +27,14 @@ export const useForm = (initialValues, initialErrorValues) => {
     });
   };
 
-  return [values, errors, handleChange, validate];
+  const handleDateChange = (event, date, target) => {
+    event.persist();
+
+    setValues({
+      ...values,
+      [target]: date
+    });
+  };
+
+  return [values, errors, handleChange, validate, handleDateChange];
 };
