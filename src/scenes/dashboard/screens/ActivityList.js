@@ -49,6 +49,8 @@ const ActivityListScreen = ({fetchActivities, activities}) => {
     fetchActivities()
   }, []);
 
+  console.log(activities);
+
   return (
     <ScrollView
       _contentContainerStyle={{

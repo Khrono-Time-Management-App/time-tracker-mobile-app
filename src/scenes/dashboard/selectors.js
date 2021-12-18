@@ -1,1 +1,1 @@
-export const activities = state => state.activities;
+export const activities = state => state.activity.activities;
