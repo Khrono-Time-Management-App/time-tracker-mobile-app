@@ -1,57 +1,15 @@
-import React, {useEffect} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import ActivityItem from '../../../components/activityItem/ActivityItem';
-import {FlatList, ScrollView, View} from 'native-base';
-import {activities} from '../selectors';
-import {getActivities} from '../actions';
-import { SafeAreaView } from 'react-native';
+import React, { useEffect } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { FlatList } from "native-base";
+import { SafeAreaView } from "react-native";
 
-const mockData = [{
-  name: 'Biceps Triceps',
-  activityDescription: 'Lorem ipsum dolor sit amet',
-  category: 'fitness',
-  startDateTime: 'TODAY @6AM'
-},
-  {
-    name: 'Learn LFTC',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'education',
-    startDateTime: 'TODAY @9AM'
-  },
-  {
-    name: 'Go to the office',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'work',
-    startDateTime: 'TODAY @10AM'
-  },
-  {
-    name: 'Good-night Sleep',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'sleep',
-    startDateTime: 'FRI @9PM'
-  },
-  {
-    name: 'Good-night Sleep',
-    activityDescription: 'Lorem ipsum dolor sit amet',
-    category: 'sleep',
-    startDateTime: 'SAT @9PM'
-  },
-  {
-    name: 'Demo Activity',
-    activityDescription: 'DEMO2',
-    category: 'education',
-    startDateTime: 'SUN @9PM'
-  },
-]
+import ActivityItem from "../../../components/activityItem/ActivityItem";
+import { activities } from "../selectors";
+import { getActivities } from "../actions";
+import TabView from "../components/TabView";
 
-const ActivityListScreen = ({fetchActivities, activities}) => {
-  useEffect(() => {
-    fetchActivities();
-  }, []);
-
-  console.log(activities);
-
+const ScheduledActivities = ({ activities }) => {
   return (
     <SafeAreaView
       _contentContainerStyle={{
@@ -61,7 +19,7 @@ const ActivityListScreen = ({fetchActivities, activities}) => {
       }}
     >
       <FlatList
-        data={[...activities, ...mockData]}
+        data={activities}
         renderItem={ActivityItem}
         keyExtractor={(_, index) => index}
       />
@@ -69,12 +27,55 @@ const ActivityListScreen = ({fetchActivities, activities}) => {
   );
 };
 
+const initialRoutes = [
+  { key: "first", title: "Scheduled Activities" },
+  { key: "second", title: "Completed Activities" },
+];
+
+const ActivityListScreen = ({ fetchActivities, activities }) => {
+  useEffect(() => {
+    fetchActivities();
+  }, []);
+
+  const filterActivities = (activities, completed) =>
+    activities.filter((activity) => {
+      return completed
+        ? new Date(activity.endDateTime).getTime() <= new Date().getTime()
+        : new Date(activity.endDateTime).getTime() >= new Date().getTime();
+    });
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "first":
+        return (
+          <ScheduledActivities
+            activities={filterActivities(activities, false)}
+          />
+        );
+      case "second":
+        return (
+          <ScheduledActivities
+            activities={filterActivities(activities, true)}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
+  return <TabView renderScene={renderScene} initialRoutes={initialRoutes} />;
+};
+
 const mapStateToProps = (state) => ({
-  activities: activities(state)
+  activities: activities(state),
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchActivities: getActivities
-}, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      fetchActivities: getActivities,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivityListScreen);

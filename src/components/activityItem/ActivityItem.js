@@ -15,7 +15,8 @@ import {
 import { Categories } from "../../constants/categories";
 
 const ActivityItem = (activity) => {
-  const { name, activityDescription, category, startDateTime } = activity.item;
+  const { name, activityDescription, category, startDateTime, endDateTime } =
+    activity.item;
 
   const getCategoryIcon = (category) => {
     switch (category) {
@@ -47,6 +48,11 @@ const ActivityItem = (activity) => {
     }
   };
 
+  const dateText =
+    new Date(endDateTime).getTime() <= new Date().getTime()
+      ? `Completed on ${new Date(endDateTime).toLocaleString()}`
+      : `Scheduled on ${new Date(startDateTime).toLocaleString()}`;
+
   const { backgroundColor, buttonColor } = getActivityCardColors(category);
 
   return (
@@ -65,7 +71,7 @@ const ActivityItem = (activity) => {
           <Box justifyContent="space-between">
             <VStack space="2">
               <Text fontSize="sm" color="white">
-                {startDateTime}
+                {dateText}
               </Text>
               <Text color="white" fontSize="lg">
                 {name}
