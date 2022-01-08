@@ -48,6 +48,22 @@ export const removeStateFromLocalStorage = async () => {
   }
 };
 
+export const setExpoPushNotificationTokenToLocalStorage = async (expoPushNotificationToken) => {
+  try {
+    await AsyncStorage.setItem(LocalStorage.ExpoPushNotificationToken, expoPushNotificationToken);
+  } catch (error) {
+    handleErrors(error);
+  }
+}
+
+export const getExpoPushNotificationTokenFromLocalStorage = async () => {
+  try {
+    return await AsyncStorage.get(LocalStorage.ExpoPushNotificationToken);
+  } catch (error) {
+    handleErrors(error);
+  }
+}
+
 export default {
   storeToken,
   getStateFromLocalStorage,
