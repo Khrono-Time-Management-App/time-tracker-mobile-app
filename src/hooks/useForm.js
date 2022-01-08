@@ -30,6 +30,8 @@ export const useForm = (initialValues, initialErrorValues) => {
   const handleDateChange = (event, date, target) => {
     event.persist();
 
+    console.log('DATE', date)
+
     setValues({
       ...values,
       [target]: date

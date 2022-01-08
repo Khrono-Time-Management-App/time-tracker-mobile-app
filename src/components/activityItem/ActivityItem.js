@@ -14,7 +14,6 @@ import {
 } from 'native-base';
 
 const ActivityItem = (activity) => {
-  console.log('activity ---> ', activity)
   const {name, activityDescription, category, startDateTime} = activity.item;
 
   const getCategoryIcon = (category) => {
@@ -28,7 +27,7 @@ const ActivityItem = (activity) => {
       case 'work':
         return workImage;
       default:
-        break
+        return fitnessImage;
     }
   }
 
@@ -43,7 +42,8 @@ const ActivityItem = (activity) => {
       case 'work':
         return {backgroundColor: "#46d11b",buttonColor: "#5bf52c"};
       default:
-        break
+        return {backgroundColor: "#46d11b",buttonColor: "#5bf52c"};
+
     }
   }
 
@@ -93,9 +93,8 @@ const ActivityItem = (activity) => {
             </Pressable>
           </Box>
           <Image
-            source={{
-              uri: getCategoryIcon(category),
-            }}
+            source={ getCategoryIcon(category)}
+            alt={"image-:D"}
             height="100"
             rounded="full"
             background={'white'}

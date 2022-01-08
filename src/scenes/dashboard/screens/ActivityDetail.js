@@ -11,6 +11,9 @@ import Input from '../../../components/Input';
 import { useForm } from '../../../hooks/useForm';
 import SmallText from '../../../components/text/SmallText';
 import { TextType } from '../../../constants/textTypes';
+import {activities} from '../selectors';
+import {Button} from 'native-base';
+import {addActivity} from '../actions';
 
 const Wrapper = styled(View)`
   display: flex;
@@ -29,12 +32,13 @@ const DateContainer = styled(View)`
 
 const INITIAL_VALUES = {
   name: '',
-  startDate: new Date(),
-  endDate: new Date(),
+  startDateTime: new Date(),
+  endDateTime: new Date(),
+  description: '',
   category: '',
 };
 
-const ActivityDetail = ({}) => {
+const ActivityDetail = ({addActivity}) => {
   const [formData, errors, handleFormChanges, _, handleDateChange] = useForm(INITIAL_VALUES, { email: '' });
 
   return (
@@ -48,24 +52,33 @@ const ActivityDetail = ({}) => {
         whiteBackground
         errorMessage={errors.name}
       />
+      <Input
+        textValue={formData.description}
+        placeholder='Description'
+        onChangeText={(text) => handleFormChanges(text, 'description')}
+        textCapitalization={'none'}
+        autoCorrection={false}
+        whiteBackground
+        errorMessage={errors.name}
+      />
       <DateContainer>
         <SmallText textType={TextType.Regular}>Start Date</SmallText>
         <DateTimePicker
-          value={formData.startDate}
+          value={formData.startDateTime}
           display='default'
           mode='datetime'
           is24Hour
-          onChange={(event, date) => handleDateChange(event, date, 'startDate')}
+          onChange={(event, date) => handleDateChange(event, date, 'startDateTime')}
         />
       </DateContainer>
       <DateContainer>
         <SmallText textType={TextType.Regular}>End Date</SmallText>
         <DateTimePicker
-          value={formData.endDate}
+          value={formData.endDateTime}
           display='default'
           mode='datetime'
           is24Hour
-          onChange={(event, date) => handleDateChange(event, date, 'endDate')}
+          onChange={(event, date) => handleDateChange(event, date, 'endDateTime')}
         />
       </DateContainer>
       <Input
@@ -77,12 +90,19 @@ const ActivityDetail = ({}) => {
         whiteBackground
         errorMessage={errors.category}
       />
+      <Button marginTop={4} onPress={() => addActivity(formData)}>
+        Add Activity
+      </Button>
     </Wrapper>
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  activities: activities(state)
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  addActivity: addActivity
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivityDetail);

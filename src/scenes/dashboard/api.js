@@ -23,3 +23,17 @@ export const getActivities = async () => {
     return response;
   });
 };
+
+export const addActivityApi = async (activity) => {
+  const headers = await getHeaders();
+
+  return axios({
+    method: 'post',
+    url: `${backendUrl}/createActivity`,
+    headers,
+    data: activity,
+  }).then(response => {
+    console.log(" addActivity addActivity addActivity --- >>", response)
+    return response;
+  });
+};
