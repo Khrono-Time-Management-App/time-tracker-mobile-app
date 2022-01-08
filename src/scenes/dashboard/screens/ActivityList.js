@@ -5,6 +5,7 @@ import ActivityItem from '../../../components/activityItem/ActivityItem';
 import {FlatList, ScrollView, View} from 'native-base';
 import {activities} from '../selectors';
 import {getActivities} from '../actions';
+import { SafeAreaView } from 'react-native';
 
 const mockData = [{
   name: 'Biceps Triceps',
@@ -46,21 +47,25 @@ const mockData = [{
 
 const ActivityListScreen = ({fetchActivities, activities}) => {
   useEffect(() => {
-    fetchActivities()
+    fetchActivities();
   }, []);
 
   console.log(activities);
 
   return (
-    <ScrollView
+    <SafeAreaView
       _contentContainerStyle={{
         px: "20px",
         mb: "4",
         minW: "72",
       }}
     >
-      <FlatList data={[...activities, ...mockData]} renderItem={ActivityItem} />
-    </ScrollView>
+      <FlatList
+        data={[...activities, ...mockData]}
+        renderItem={ActivityItem}
+        keyExtractor={(_, index) => index}
+      />
+    </SafeAreaView>
   );
 };
 

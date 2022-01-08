@@ -14,7 +14,7 @@ import {
 } from 'native-base';
 
 const ActivityItem = (activity) => {
-  const {name, activityDescription, category, startDateTime} = activity.item;
+  const { name, activityDescription, category, startDateTime } = activity.item;
 
   const getCategoryIcon = (category) => {
     switch (category) {
