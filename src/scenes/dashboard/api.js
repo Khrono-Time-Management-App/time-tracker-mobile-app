@@ -1,7 +1,6 @@
 import axios from 'axios';
-import {getTokenFromLocalStorage} from '../../utils/asyncStorageMethods';
-
-const backendUrl = 'http://localhost:8080/activity'
+import { getTokenFromLocalStorage } from '../../utils/asyncStorageMethods';
+import { getBackendUrl } from '../../utils';
 
 const getHeaders = async () => {
   const token = await getTokenFromLocalStorage();
@@ -14,6 +13,7 @@ const getHeaders = async () => {
 
 export const getActivities = async () => {
   const headers = await getHeaders();
+  const backendUrl = `${getBackendUrl()}/activity`;
 
   return axios({
     method: 'get',
@@ -26,6 +26,7 @@ export const getActivities = async () => {
 
 export const addActivityApi = async (activity) => {
   const headers = await getHeaders();
+  const backendUrl = `${getBackendUrl()}/activity`;
 
   return axios({
     method: 'post',

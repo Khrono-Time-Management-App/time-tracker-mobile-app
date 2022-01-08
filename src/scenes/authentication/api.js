@@ -1,8 +1,9 @@
 import axios from 'axios';
-
-const backendUrl = 'http://localhost:8080/user'
+import { getBackendUrl } from '../../utils';
 
 export const loginApiCall = async (credentials) => {
+  const backendUrl = `${getBackendUrl()}/user`;
+
   return axios({
     method: 'post',
     url: `${backendUrl}/login`,
@@ -14,6 +15,8 @@ export const loginApiCall = async (credentials) => {
 };
 
 export const createAccountApiCall = async (credentials) => {
+  const backendUrl = `${getBackendUrl()}/user`;
+
   return axios({
     method: 'post',
     url: `${backendUrl}/createUser`,
