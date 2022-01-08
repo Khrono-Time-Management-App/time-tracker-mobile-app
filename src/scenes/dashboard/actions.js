@@ -10,6 +10,7 @@ export const getActivities = () => async dispatch => {
 
   try {
     const { data: response } = await getActivitiesApiCall();
+    console.log('response ------------------->> ', response);
     dispatch({ type: GET_ACTIVITIES.SUCCESS, payload: { ...response } })
   } catch (error) {
     dispatch({ type: GET_ACTIVITIES.FAILURE, payload: error });

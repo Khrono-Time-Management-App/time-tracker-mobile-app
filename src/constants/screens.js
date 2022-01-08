@@ -3,6 +3,7 @@ export const screens = {
   SignUp: 'SignUp',
   Dashboard: 'Dashboard',
   Activities: 'Activities',
+  ActivityTimer: 'ActivityTimer',
   ActivitiesDetail: 'ActivitiesDetail',
   ActivitiesStackNavigator: 'ActivitiesStackNavigator',
 };

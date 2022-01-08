@@ -10,6 +10,8 @@ const BottomTabBarIconOptions = ({navigationRoute, isFocused, iconColor, iconSiz
     iconName = 'dashboard';
   } else if (navigationRoute.name === screens.Activities) {
     iconName = 'bar-chart-o';
+  } else if (navigationRoute.name === screens.ActivityTimer) {
+    iconName = 'clock-o';
   }
 
   return <Icon name={iconName} size={iconSize} color={iconColor} />;

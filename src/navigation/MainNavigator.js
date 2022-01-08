@@ -16,6 +16,7 @@ import { getTokenFromLocalStorage } from '../utils/asyncStorageMethods';
 import { setUserFromToken } from '../scenes/authentication/actions';
 import { bindActionCreators } from 'redux';
 import ActivityStackNavigator from './ActivityStackNavigator';
+import ActivityTimer from "../scenes/dashboard/screens/ActivityTimer";
 
 const authenticationNavigatorScreenOptions = {
   headerShown: false
@@ -59,6 +60,7 @@ const MainNavigator = ({ isAuthenticated, onSetUserToken  }) => {
           })}
         >
           <BottomTabNavigator.Screen name={screens.Dashboard} component={DashboardScreen}/>
+          <BottomTabNavigator.Screen name={screens.ActivityTimer} component={ActivityTimer}/>
           <BottomTabNavigator.Screen name={screens.Activities} component={ActivityStackNavigator}/>
         </BottomTabNavigator.Navigator>
       ) : (

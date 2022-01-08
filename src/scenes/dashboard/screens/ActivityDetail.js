@@ -12,8 +12,9 @@ import { useForm } from '../../../hooks/useForm';
 import SmallText from '../../../components/text/SmallText';
 import { TextType } from '../../../constants/textTypes';
 import {activities} from '../selectors';
-import {Button} from 'native-base';
+import { Button, Select, CheckIcon } from 'native-base';
 import {addActivity} from '../actions';
+import {Categories} from "../../../constants/categories";
 
 const Wrapper = styled(View)`
   display: flex;
@@ -81,15 +82,22 @@ const ActivityDetail = ({addActivity}) => {
           onChange={(event, date) => handleDateChange(event, date, 'endDateTime')}
         />
       </DateContainer>
-      <Input
-        textValue={formData.category}
-        placeholder='Category'
-        onChangeText={(text) => handleFormChanges(text, 'category')}
-        textCapitalization={'none'}
-        autoCorrection={false}
-        whiteBackground
-        errorMessage={errors.category}
-      />
+        <Select
+            selectedValue={formData.category}
+            accessibilityLabel="Choose Category"
+            placeholder="Choose Category"
+            _selectedItem={{
+                endIcon: <CheckIcon size="5" />,
+            }}
+            mt={1}
+            onValueChange={(itemValue) => handleFormChanges(itemValue, 'category')}
+        >
+            <Select.Item label={Categories.fitness} value={Categories.fitness} />
+            <Select.Item label={Categories.education} value={Categories.education} />
+            <Select.Item label={Categories.sleep} value={Categories.sleep} />
+            <Select.Item label={Categories.work} value={Categories.work} />
+            <Select.Item label={Categories.leisure} value={Categories.leisure} />
+        </Select>
       <Button marginTop={4} onPress={() => addActivity(formData)}>
         Add Activity
       </Button>

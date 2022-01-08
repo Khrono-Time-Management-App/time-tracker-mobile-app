@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { LocalStorage } from '../constants/localStorage';
-import { handleErrors } from './handleErrors';
+import { LocalStorage } from "../constants/localStorage";
+import { handleErrors } from "./handleErrors";
 
 export const storeToken = async (tokenObject) => {
   try {
@@ -16,7 +16,7 @@ export const getTokenFromLocalStorage = async () => {
   try {
     const token = await AsyncStorage.getItem(LocalStorage.Token);
 
-    return token
+    return token;
   } catch (error) {
     handleErrors(error);
   }
@@ -43,6 +43,32 @@ export const setStateToLocalStorage = async (currentState) => {
 export const removeStateFromLocalStorage = async () => {
   try {
     await AsyncStorage.removeItem(LocalStorage.Authentication);
+  } catch (error) {
+    handleErrors(error);
+  }
+};
+
+export const getOnGoingActivityFromLocalStorage = async () => {
+  try {
+    const activity = await AsyncStorage.getItem(LocalStorage.OnGoingActivity);
+    return activity !== null ? JSON.parse(activity) : null;
+  } catch (error) {
+    handleErrors(error);
+  }
+};
+
+export const setOnGoingActivityToLocalStorage = async (activity) => {
+  try {
+    const activityToAdd = JSON.stringify(activity);
+    await AsyncStorage.setItem(LocalStorage.OnGoingActivity, activityToAdd);
+  } catch (error) {
+    handleErrors(error);
+  }
+};
+
+export const removeOnGoingActivityToLocalStorage = async () => {
+  try {
+    await AsyncStorage.removeItem(LocalStorage.OnGoingActivity);
   } catch (error) {
     handleErrors(error);
   }

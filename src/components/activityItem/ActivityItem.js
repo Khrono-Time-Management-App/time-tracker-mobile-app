@@ -1,8 +1,8 @@
-import * as React from 'react';
-import fitnessImage from '../../../assets/categoriesPicture/sportImage.jpeg'
-import educationImage from '../../../assets/categoriesPicture/educationImage.jpeg'
-import sleepImage from '../../../assets/categoriesPicture/sleepImage.jpeg'
-import workImage from '../../../assets/categoriesPicture/workImage.jpeg'
+import * as React from "react";
+import fitnessImage from "../../../assets/categoriesPicture/sportImage.jpeg";
+import educationImage from "../../../assets/categoriesPicture/educationImage.jpeg";
+import sleepImage from "../../../assets/categoriesPicture/sleepImage.jpeg";
+import workImage from "../../../assets/categoriesPicture/workImage.jpeg";
 import {
   NativeBaseProvider,
   Box,
@@ -11,43 +11,43 @@ import {
   Text,
   Pressable,
   Image,
-} from 'native-base';
+} from "native-base";
+import { Categories } from "../../constants/categories";
 
 const ActivityItem = (activity) => {
   const { name, activityDescription, category, startDateTime } = activity.item;
 
   const getCategoryIcon = (category) => {
     switch (category) {
-      case 'fitness':
+      case Categories.fitness:
         return fitnessImage;
-      case 'education':
+      case Categories.education:
         return educationImage;
-      case 'sleep':
+      case Categories.sleep:
         return sleepImage;
-      case 'work':
+      case Categories.work:
         return workImage;
       default:
         return fitnessImage;
     }
-  }
+  };
 
   const getActivityCardColors = (category) => {
     switch (category) {
-      case 'fitness':
-        return {backgroundColor: "primary.600", buttonColor: "primary.400"}
-      case 'education':
-        return {backgroundColor: "#fcba03", buttonColor: "#cf9c11"};
-      case 'sleep':
-        return {backgroundColor: "#cf3d11", buttonColor: "#f55b2c"};
-      case 'work':
-        return {backgroundColor: "#46d11b",buttonColor: "#5bf52c"};
+      case Categories.fitness:
+        return { backgroundColor: "primary.600", buttonColor: "primary.400" };
+      case Categories.education:
+        return { backgroundColor: "#fcba03", buttonColor: "#cf9c11" };
+      case Categories.sleep:
+        return { backgroundColor: "#cf3d11", buttonColor: "#f55b2c" };
+      case Categories.work:
+        return { backgroundColor: "#46d11b", buttonColor: "#5bf52c" };
       default:
-        return {backgroundColor: "#46d11b",buttonColor: "#5bf52c"};
-
+        return { backgroundColor: "#46d11b", buttonColor: "#5bf52c" };
     }
-  }
+  };
 
-  const {backgroundColor, buttonColor} = getActivityCardColors(category)
+  const { backgroundColor, buttonColor } = getActivityCardColors(category);
 
   return (
     <NativeBaseProvider>
@@ -93,17 +93,17 @@ const ActivityItem = (activity) => {
             </Pressable>
           </Box>
           <Image
-            source={ getCategoryIcon(category)}
+            source={getCategoryIcon(category)}
             alt={"image-:D"}
             height="100"
             rounded="full"
-            background={'white'}
+            background={"white"}
             width="100"
           />
         </HStack>
       </Box>
     </NativeBaseProvider>
   );
-}
+};
 
 export default ActivityItem;
