@@ -240,6 +240,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
     useEffect(() => {
         setCategories(activitiesReport);
+        console.log('OOONGA BOONGA ----> ', activitiesReport)
     }, [activitiesReport]);
 
     const renderHeader = () => {
@@ -271,7 +272,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
                     <View style={{ marginLeft: SIZES.padding }}>
                         <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>Past Month</Text>
-                        <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>18% (also mock number) more than last month</Text>
+                        <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>18% more than last month</Text>
                     </View>
                 </View>
             </View>
@@ -412,10 +413,9 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
     const renderIncomingActivitiesTitle = () => {
         return (
-            <View style={{ height: 80, backgroundColor: COLORS.lightGray2, padding: SIZES.padding }}>
+            <View style={{ height: 80, backgroundColor: COLORS.lightGray2, padding: SIZES.padding0 }}>
                 {/* Title */}
-                <Text style={{ ...FONTS.h3, color: COLORS.primary }}>INCOMING ACTIVITIES</Text>
-                <Text style={{ ...FONTS.body4, color: COLORS.darkgray }}>12 (Mock Number) Total</Text>
+                <Text style={{ ...FONTS.h2, color: COLORS.primary }}>INCOMING ACTIVITIES</Text>
             </View>
         )
     }
@@ -424,7 +424,13 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
     const renderIncomingActivities = () => {
         let allExpenses = selectedCategory ? selectedCategory.expenses : []
         // TODO - si aici am lasat statusul ala hardcodat sa fac diferenta intre ele mai usor
-        let incomingExpenses = allExpenses.filter(a => a.startDateTime >= currentDate.getTime())
+        let incomingExpenses = allExpenses.filter(a => {
+            console.log("title", a.title)
+            console.log("st",a.startDateTime)
+            console.log("cd", currentDate.getTime())
+
+            return a.endDateTime >= currentDate.getTime()
+        })
         // let incomingExpenses = allExpenses.filter(a => a.status === "P")
 
         const renderItem = ({ item, index }) => (
@@ -466,7 +472,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
                 {/* Activity Description */}
                 <View style={{ paddingHorizontal: SIZES.padding }}>
                     {/* Title and description */}
-                    <Text style={{ ...FONTS.h2, }}>{item.title}</Text>
+                    <Text style={{ ...FONTS.h2, }}>{item.title}{item.startDateTime <= currentDate.getTime() && " - active"}</Text>
                     <Text style={{ ...FONTS.body3, flexWrap: 'wrap', color: COLORS.darkgray }}>
                         {item.description}
                     </Text>
@@ -529,13 +535,9 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
         )
     }
 
-    // TODO
     const processCategoryDataToDisplay = () => {
-        // Filter expenses with "Confirmed" status
         let chartData = categories.map((item) => {
-            // TODO - momentan am lasat statusurile alea hardcodate sa imi fie mai usor sa verific
-            // let confirmExpenses = item.expenses.filter(a => a.endDateTime <= currentDate.getTime())
-            let confirmExpenses = item.expenses.filter(a => a.status === "C")
+            let confirmExpenses = item.expenses.filter(a => a.endDateTime <= currentDate.getTime())
             const total = confirmExpenses.reduce((a, b) => a + ((b.endDateTime - b.startDateTime) / (1000 * 60 * 60) || 0), 0)
 
             return {
@@ -709,7 +711,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
                 {/* Activities */}
                 <View style={{ justifyContent: 'center' }}>
-                    <Text style={{ color: (selectedCategory && selectedCategory.name === item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} Hours - {item.label}</Text>
+                    <Text style={{ color: (selectedCategory && selectedCategory.name === item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{parseFloat(item.y).toFixed(2)} Hours - {item.label}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -735,7 +737,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
             {/* Category Header Section */}
             {renderCategoryHeaderSection()}
 
-            <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+            <View contentContainerStyle={{ paddingBottom: 60 }}>
                 {
                     viewMode === "list" &&
                     <View>
@@ -750,7 +752,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
                         {renderExpenseSummary()}
                     </View>
                 }
-            </ScrollView>
+            </View>
         </View>
     )
 };

@@ -1,5 +1,6 @@
 import { ADD_ACTIVITY, GET_ACTIVITIES, GET_ACTIVITIES_REPORT } from './actions';
 import { COLORS, icons } from '../../../constants';
+import {Categories} from "../../constants/categories";
 
 const INITIAL_STATE = {
   activities: [],
@@ -8,6 +9,23 @@ const INITIAL_STATE = {
 };
 
 const colorsArray = Object.values(COLORS);
+
+const handleCategoryIcon = (category) => {
+  switch (category) {
+    case Categories.fitness:
+      return icons.sports_icon
+    case Categories.leisure:
+      return icons.healthcare
+    case Categories.work:
+      return icons.calendar
+    case Categories.sleep:
+      return icons.baby_car
+    case Categories.education:
+      return icons.education
+    default:
+      return icons.food
+  }
+}
 
 const activitiesReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -29,14 +47,14 @@ const activitiesReducer = (state = INITIAL_STATE, action) => {
       const { currentMonth, previousMonth } = action.payload;
       let numberOfCategories = 0;
 
-      const reportsAcc = [ ...currentMonth, ...previousMonth].reduce((acc, activity) => {
+      const reportsAcc = [ ...currentMonth].reduce((acc, activity) => {
         const accCategoryIndex = acc.findIndex(item => item.name === activity.category);
         if (accCategoryIndex === -1) {
           numberOfCategories++;
           acc.push({
             id: numberOfCategories,
             name: activity.category,
-            icon: icons.education,
+            icon: handleCategoryIcon(activity.category),
             color: colorsArray[numberOfCategories - 1],
             expenses: [
               {

@@ -7,19 +7,23 @@ export const COLORS = {
     secondary: "#FF615F",   // peach
 
     // colors
-    black: "#1E1F20",
-    white: "#FFFFFF",
-    lightGray: "#F5F7F9",
-    lightGray2: '#FAFBFD',
-    gray: "#BEC1D2",
-    blue: '#42B0FF',
-    darkgray: '#898C95',
-    yellow: '#FFD573',
-    lightBlue: '#95A9B8',
-    darkgreen: '#008159',
     peach: '#FF615F',
     purple: '#8e44ad',
     red: '#FF0000',
+    purple2: '#a36fb9',
+    purple3: '#514bda',
+    gray: "#BEC1D2",
+    blue: '#42B0FF',
+    yellow: '#FFD573',
+    darkgreen: '#008159',
+    darkgray: '#898C95',
+    purple1: '#250734',
+    lightGray: "#F5F7F9",
+    black: "#1E1F20",
+    lightGray2: '#FAFBFD',
+    lightBlue: '#95A9B8',
+    white: "#FFFFFF",
+
 };
 
 export const SIZES = {
@@ -29,6 +33,7 @@ export const SIZES = {
     radius: 12,
     padding: 24,
     padding2: 36,
+    padding0 : 12,
 
     // font sizes
     largeTitle: 50,
