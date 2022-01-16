@@ -10,7 +10,7 @@ import {VictoryPie} from 'victory-native';
 import {Svg} from 'react-native-svg';
 import {COLORS, FONTS, icons, SIZES} from "../../../../constants";
 import {millisecondsToTime} from "./ActivityTimer";
-import { activitiesReport } from '../selectors';
+import {activities, activitiesReport} from '../selectors';
 import { getActivitiesReport } from '../actions';
 
 
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const DashboardScreen = ({ activitiesReport, fetchReport }) => {
+const DashboardScreen = ({ activitiesReport, fetchReport, activities }) => {
 
     const confirmStatus = "C"
     const pendingStatus = "P"
@@ -236,11 +236,10 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
     useEffect(() => {
         fetchReport();
-    }, []);
+    }, [activities]);
 
     useEffect(() => {
         setCategories(activitiesReport);
-        console.log('OOONGA BOONGA ----> ', activitiesReport)
     }, [activitiesReport]);
 
     const renderHeader = () => {
@@ -423,13 +422,8 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
     const renderIncomingActivities = () => {
         let allExpenses = selectedCategory ? selectedCategory.expenses : []
-        // TODO - si aici am lasat statusul ala hardcodat sa fac diferenta intre ele mai usor
         let incomingExpenses = allExpenses.filter(a => {
-            console.log("title", a.title)
-            console.log("st",a.startDateTime)
-            console.log("cd", currentDate.getTime())
-
-            return a.endDateTime >= currentDate.getTime()
+            return new Date(a.endDateTime).getTime() >= currentDate.getTime()
         })
         // let incomingExpenses = allExpenses.filter(a => a.status === "P")
 
@@ -579,9 +573,6 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
         let chartData = processCategoryDataToDisplay()
         let colorScales = chartData.map((item) => item.color)
         let totalExpenseCount = chartData.reduce((a, b) => a + (b.expenseCount || 0), 0)
-
-        console.log("Check Chart")
-        console.log(chartData)
 
         if(Platform.OS === 'ios')
         {
@@ -758,7 +749,8 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 };
 
 const mapStateToProps = (state) => ({
-    activitiesReport: activitiesReport(state)
+    activitiesReport: activitiesReport(state),
+    activities: activities(state)
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

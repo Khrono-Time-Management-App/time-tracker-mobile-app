@@ -36,8 +36,6 @@ const INITIAL_TIMER_VALUES = {
 };
 
 export const millisecondsToTime = (duration) => {
-  console.log('duration ------> ', duration)
-
   let seconds = Math.floor((duration / 1000) % 60),
     minutes = Math.floor((duration / (1000 * 60)) % 60),
     hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
