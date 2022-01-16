@@ -24,6 +24,19 @@ export const getActivities = async () => {
   });
 };
 
+export const getActivitiesReport = async () => {
+  const headers = await getHeaders();
+  const backendUrl = `${getBackendUrl()}/activity`;
+
+  return axios({
+    method: 'get',
+    url: `${backendUrl}/getActivities/last2Months`,
+    headers,
+  }).then(response => {
+    return response;
+  });
+}
+
 export const addActivityApi = async (activity) => {
   const headers = await getHeaders();
   const backendUrl = `${getBackendUrl()}/activity`;

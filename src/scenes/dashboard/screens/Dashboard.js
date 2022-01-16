@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -10,6 +10,8 @@ import {VictoryPie} from 'victory-native';
 import {Svg} from 'react-native-svg';
 import {COLORS, FONTS, icons, SIZES} from "../../../../constants";
 import {millisecondsToTime} from "./ActivityTimer";
+import { activitiesReport } from '../selectors';
+import { getActivitiesReport } from '../actions';
 
 
 const styles = StyleSheet.create({
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const DashboardScreen = ({}) => {
+const DashboardScreen = ({ activitiesReport, fetchReport }) => {
 
     const confirmStatus = "C"
     const pendingStatus = "P"
@@ -227,10 +229,18 @@ const DashboardScreen = ({}) => {
 
     const categoryListHeightAnimationValue = useRef(new Animated.Value(115)).current;
 
-    const [categories, setCategories] = React.useState(categoriesData)
-    const [viewMode, setViewMode] = React.useState("chart")
-    const [selectedCategory, setSelectedCategory] = React.useState(null)
-    const [showMoreToggle, setShowMoreToggle] = React.useState(false)
+    const [categories, setCategories] = React.useState(activitiesReport);
+    const [viewMode, setViewMode] = React.useState("chart");
+    const [selectedCategory, setSelectedCategory] = React.useState(null);
+    const [showMoreToggle, setShowMoreToggle] = React.useState(false);
+
+    useEffect(() => {
+        fetchReport();
+    }, []);
+
+    useEffect(() => {
+        setCategories(activitiesReport);
+    }, [activitiesReport]);
 
     const renderHeader = () => {
         return (
@@ -414,8 +424,8 @@ const DashboardScreen = ({}) => {
     const renderIncomingActivities = () => {
         let allExpenses = selectedCategory ? selectedCategory.expenses : []
         // TODO - si aici am lasat statusul ala hardcodat sa fac diferenta intre ele mai usor
-        // let incomingExpenses = allExpenses.filter(a => a.startDateTime >= currentDate.getTime())
-        let incomingExpenses = allExpenses.filter(a => a.status === "P")
+        let incomingExpenses = allExpenses.filter(a => a.startDateTime >= currentDate.getTime())
+        // let incomingExpenses = allExpenses.filter(a => a.status === "P")
 
         const renderItem = ({ item, index }) => (
             <View style={{
@@ -745,8 +755,12 @@ const DashboardScreen = ({}) => {
     )
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    activitiesReport: activitiesReport(state)
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    fetchReport: getActivitiesReport,
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardScreen);
