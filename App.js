@@ -3,6 +3,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Provider } from 'react-redux';
 import { NativeBaseProvider } from 'native-base';
 import * as Notifications from 'expo-notifications';
+import { useFonts } from 'expo-font';
 
 import configureStore from './src/configureStore';
 import MainNavigator from './src/navigation/MainNavigator';
@@ -22,6 +23,10 @@ const App = () => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+
+  const [loaded] = useFonts({
+    RobotoRegular: require('./assets/fonts/Roboto-Regular.ttf'),
+  });
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => {

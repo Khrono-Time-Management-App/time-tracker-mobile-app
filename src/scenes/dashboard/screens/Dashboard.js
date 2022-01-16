@@ -1,27 +1,15 @@
 import React, {useRef} from 'react';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 
-import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
-    Image,
-    ImageBackground,
-    TouchableOpacity,
-    FlatList,
-    Animated,
-    Platform
-} from 'react-native';
-import { VictoryPie } from 'victory-native';
+import {Animated, FlatList, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {VictoryPie} from 'victory-native';
 
 import {Svg} from 'react-native-svg';
-import {COLORS, FONTS, SIZES, icons, images} from "../../../../constants";
+import {COLORS, FONTS, icons, SIZES} from "../../../../constants";
+import {millisecondsToTime} from "./ActivityTimer";
 
 
 const styles = StyleSheet.create({
@@ -41,6 +29,13 @@ const DashboardScreen = ({}) => {
 
     const confirmStatus = "C"
     const pendingStatus = "P"
+    const currentDate = new Date();
+
+    const displayDuration = (duration) => {
+        const [hours, minutes, seconds] = millisecondsToTime(duration);
+
+        return `${hours ? hours : "00" }:${minutes ? minutes : "00" }:${seconds ? seconds : "00" }`
+    }
 
     let categoriesData = [
         {
@@ -53,32 +48,32 @@ const DashboardScreen = ({}) => {
                     id: 1,
                     title: "Flcd Exam Preparation",
                     description: "You better Study",
-                    location: "FSEGA maybe",
-                    total: 100.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus
                 },
                 {
                     id: 2,
                     title: "Arduino",
                     description: "Hardward",
-                    location: "Harvard somewhere",
-                    total: 30.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus
                 },
                 {
                     id: 3,
                     title: "Javascript Tutorials",
                     description: "Udemy program",
-                    location: "Home",
-                    total: 20.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus
                 },
                 {
                     id: 4,
                     title: "PHP Tutorial",
                     description: "Nobody learns php anymore",
-                    location: "Home",
-                    total: 20.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus
                 }
             ],
@@ -93,48 +88,48 @@ const DashboardScreen = ({}) => {
                     id: 5,
                     title: "Mid-day rest",
                     description: "rest is important",
-                    location: "Home",
-                    total: 1.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus,
                 },
                 {
                     id: 6,
                     title: "Night's sleep",
                     description: "rest is important",
-                    location: "Home",
-                    total: 9.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus,
                 },
                 {
                     id: 7,
                     title: "Night's sleep",
                     description: "rest is important",
-                    location: "Home",
-                    total: 9.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
                 {
                     id: 8,
                     title: "Night's sleep",
                     description: "rest is important",
-                    location: "Home",
-                    total: 9.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
                 {
                     id: 9,
                     title: "Night's sleep",
                     description: "rest is important",
-                    location: "Home",
-                    total: 9.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
                 {
                     id: 10,
                     title: "Protein powder",
                     description: "Protein",
-                    location: "ByProgrammers' Pharmacy",
-                    total: 50.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
 
@@ -142,7 +137,7 @@ const DashboardScreen = ({}) => {
         },
         {
             id: 3,
-            name: "Relaxation",
+            name: "Leisure",
             icon: icons.healthcare,
             color: COLORS.peach,
             expenses: [
@@ -150,32 +145,32 @@ const DashboardScreen = ({}) => {
                     id: 11,
                     title: "Spa Retreat",
                     description: "It feels nice",
-                    location: "Some spa somewhere",
-                    total: 10.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus,
                 },
                 {
                     id: 12,
                     title: "Detox",
                     description: "Detox is important",
-                    location: "Detox Center",
-                    total: 2.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
                 {
                     id: 13,
                     title: "Detox",
                     description: "Detox is important",
-                    location: "Detox Center",
-                    total: 2.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
                 {
                     id: 14,
                     title: "Beauty Sleep",
                     description: "sleep = nice",
-                    location: "Home",
-                    total: 50.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus,
                 },
             ],
@@ -190,16 +185,16 @@ const DashboardScreen = ({}) => {
                     id: 15,
                     title: "Gym Membership",
                     description: "Monthly - membership",
-                    location: "Bårsan's Gym",
-                    total: 45.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus,
                 },
                 {
                     id: 16,
                     title: "Boxing Camp",
                     description: "Cardio is nice",
-                    location: "ByProgrammers' Gym",
-                    total: 15.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
             ],
@@ -214,16 +209,16 @@ const DashboardScreen = ({}) => {
                     id: 17,
                     title: "Task 1",
                     description: "We all hate task 1",
-                    location: "Office",
-                    total: 20.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: pendingStatus,
                 },
                 {
                     id: 18,
                     title: "Task 2",
                     description: "We hate task 2 even more",
-                    location: "Office",
-                    total: 50.00,
+                    startDateTime: new Date().getTime(),
+                    endDateTime: new Date().getTime() + 1000 * 60 * 60,
                     status: confirmStatus,
                 },
             ],
@@ -237,12 +232,12 @@ const DashboardScreen = ({}) => {
     const [selectedCategory, setSelectedCategory] = React.useState(null)
     const [showMoreToggle, setShowMoreToggle] = React.useState(false)
 
-    function renderHeader() {
+    const renderHeader = () => {
         return (
             <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
                 <View>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>My activities</Text>
-                    <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>Report (private)</Text>
+                    <Text style={{ color: COLORS.primary }}>My activities</Text>
+                    <Text style={{ color: COLORS.darkgray }}>Report (private)</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>
@@ -273,7 +268,7 @@ const DashboardScreen = ({}) => {
         )
     }
 
-    function renderCategoryHeaderSection() {
+    const renderCategoryHeaderSection = () => {
         return (
             <View style={{ flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Title */}
@@ -333,7 +328,7 @@ const DashboardScreen = ({}) => {
         )
     }
 
-    function renderCategoryList() {
+    const renderCategoryList = () => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 onPress={() => setSelectedCategory(item)}
@@ -405,7 +400,7 @@ const DashboardScreen = ({}) => {
         )
     }
 
-    function renderIncomingExpensesTitle() {
+    const renderIncomingActivitiesTitle = () => {
         return (
             <View style={{ height: 80, backgroundColor: COLORS.lightGray2, padding: SIZES.padding }}>
                 {/* Title */}
@@ -415,8 +410,11 @@ const DashboardScreen = ({}) => {
         )
     }
 
-    function renderIncomingExpenses() {
+
+    const renderIncomingActivities = () => {
         let allExpenses = selectedCategory ? selectedCategory.expenses : []
+        // TODO - si aici am lasat statusul ala hardcodat sa fac diferenta intre ele mai usor
+        // let incomingExpenses = allExpenses.filter(a => a.startDateTime >= currentDate.getTime())
         let incomingExpenses = allExpenses.filter(a => a.status === "P")
 
         const renderItem = ({ item, index }) => (
@@ -455,7 +453,7 @@ const DashboardScreen = ({}) => {
                     <Text style={{ ...FONTS.h3, color: selectedCategory.color, }}>{selectedCategory.name}</Text>
                 </View>
 
-                {/* Expense Description */}
+                {/* Activity Description */}
                 <View style={{ paddingHorizontal: SIZES.padding }}>
                     {/* Title and description */}
                     <Text style={{ ...FONTS.h2, }}>{item.title}</Text>
@@ -463,8 +461,8 @@ const DashboardScreen = ({}) => {
                         {item.description}
                     </Text>
 
-                    {/* Location */}
-                    <Text style={{ marginTop: SIZES.padding, ...FONTS.h4, }}>Location</Text>
+                    {/* Date */}
+                    <Text style={{ marginTop: SIZES.padding, ...FONTS.h4, }}>Date</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Image
                             source={icons.pin}
@@ -475,11 +473,11 @@ const DashboardScreen = ({}) => {
                                 marginRight: 5
                             }}
                         />
-                        <Text style={{ marginBottom: SIZES.base, color: COLORS.darkgray, ...FONTS.body4 }}>{item.location}</Text>
+                        <Text style={{ marginBottom: SIZES.base, color: COLORS.darkgray, ...FONTS.body4 }}>{new Date(item.startDateTime).toDateString()}</Text>
                     </View>
                 </View>
 
-                {/* Price */}
+                {/* Duration */}
                 <View
                     style={{
                         height: 50,
@@ -490,14 +488,14 @@ const DashboardScreen = ({}) => {
                         backgroundColor: selectedCategory.color,
                     }}
                 >
-                    <Text style={{ color: COLORS.white, ...FONTS.body3 }}>CONFIRM {item.total.toFixed(2)} Hours</Text>
+                    <Text style={{ color: COLORS.white, ...FONTS.body3 }}>Duration: {displayDuration(item.endDateTime - item.startDateTime)}</Text>
                 </View>
             </View>
         )
 
         return (
             <View>
-                {renderIncomingExpensesTitle()}
+                {renderIncomingActivitiesTitle()}
 
                 {
                     incomingExpenses.length > 0 &&
@@ -518,15 +516,17 @@ const DashboardScreen = ({}) => {
                 }
 
             </View>
-
         )
     }
 
-    function processCategoryDataToDisplay() {
+    // TODO
+    const processCategoryDataToDisplay = () => {
         // Filter expenses with "Confirmed" status
         let chartData = categories.map((item) => {
+            // TODO - momentan am lasat statusurile alea hardcodate sa imi fie mai usor sa verific
+            // let confirmExpenses = item.expenses.filter(a => a.endDateTime <= currentDate.getTime())
             let confirmExpenses = item.expenses.filter(a => a.status === "C")
-            const total = confirmExpenses.reduce((a, b) => a + (b.total || 0), 0)
+            const total = confirmExpenses.reduce((a, b) => a + ((b.endDateTime - b.startDateTime) / (1000 * 60 * 60) || 0), 0)
 
             return {
                 name: item.name,
@@ -544,7 +544,7 @@ const DashboardScreen = ({}) => {
         let totalExpense = filterChartData.reduce((a, b) => a + (b.y || 0), 0)
 
         // Calculate percentage and repopulate chart data
-        let finalChartData = filterChartData.map((item) => {
+        return filterChartData.map((item) => {
             let percentage = (item.y / totalExpense * 100).toFixed(0)
             return {
                 label: `${percentage}%`,
@@ -555,16 +555,14 @@ const DashboardScreen = ({}) => {
                 id: item.id
             }
         })
-
-        return finalChartData
     }
 
-    function setSelectCategoryByName(name) {
+    const setSelectCategoryByName = (name) => {
         let category = categories.filter(a => a.name === name)
         setSelectedCategory(category[0])
     }
 
-    function renderChart() {
+    const renderChart = () => {
 
         let chartData = processCategoryDataToDisplay()
         let colorScales = chartData.map((item) => item.color)
@@ -668,7 +666,7 @@ const DashboardScreen = ({}) => {
 
     }
 
-    function renderExpenseSummary() {
+    const renderExpenseSummary = () => {
         let data = processCategoryDataToDisplay()
 
         const renderItem = ({ item }) => (
@@ -699,7 +697,7 @@ const DashboardScreen = ({}) => {
                     <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name === item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.name}</Text>
                 </View>
 
-                {/* Expenses */}
+                {/* Activities */}
                 <View style={{ justifyContent: 'center' }}>
                     <Text style={{ color: (selectedCategory && selectedCategory.name === item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} Hours - {item.label}</Text>
                 </View>
@@ -732,7 +730,7 @@ const DashboardScreen = ({}) => {
                     viewMode === "list" &&
                     <View>
                         {renderCategoryList()}
-                        {renderIncomingExpenses()}
+                        {renderIncomingActivities()}
                     </View>
                 }
                 {
