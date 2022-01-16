@@ -247,7 +247,7 @@ const DashboardScreen = ({ activitiesReport, fetchReport }) => {
         return (
             <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
                 <View>
-                    <Text style={{ color: COLORS.primary }}>My activities</Text>
+                    <Text style={{ color: COLORS.primary, marginTop: 24 }}>My activities</Text>
                     <Text style={{ color: COLORS.darkgray }}>Report (private)</Text>
                 </View>
 
